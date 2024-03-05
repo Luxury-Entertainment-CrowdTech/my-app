@@ -70,7 +70,7 @@ export default {
                 // Si todas las validaciones son correctas, proceder con el inicio de sesión
                 this.dialog = true;
                 try {
-                    const response = await axios.post('http://localhost:3004/login', {
+                    const response = await axios.post(`${process.env.VUE_APP_AUTH_BASE_URL}/login`, {
                         usuario: this.usuario,
                         contrasena: this.contrasena,
                         // token: this.token

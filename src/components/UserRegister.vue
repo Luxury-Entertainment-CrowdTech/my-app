@@ -126,7 +126,7 @@ export default {
             console.log('Form Data:', formData.get('faceImage'));
 
             try {
-                const response = await axios.post('http://localhost:3004/register', formData, {
+                const response = await axios.post(`${process.env.VUE_APP_AUTH_BASE_URL}/register`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
