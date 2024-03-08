@@ -295,7 +295,6 @@ export default {
     },
     watch: {
         selectedUser(newValue) {
-            //const foundUser = this.users.find(user => `${user.nombre} ${user.apellido}` === newValue);
             const foundUser = this.users.find(user => `${user.usuario}` === newValue);
             this.selectedUserId = foundUser ? foundUser._id : null;
             console.log('Usuario seleccionado:', this.selectedUserId);
@@ -335,7 +334,7 @@ export default {
         uploadFile(file) {
             // Ahora este método recibe directamente el archivo desde el evento emitido por FileUploadForm
             // Verifica si el archivo existe y tiene propiedad 'name'
-            if (file && file.name) {
+            if (file && file?.name) {
                 console.log('Archivo recibido para subir:', file.name);
                 this.sendFileToServer(file);
             } else {
@@ -427,7 +426,7 @@ export default {
 
             try {
                 const response = await axios.get(`${process.env.VUE_APP_BLOCKCHAIN_BASE_URL}/retrieve/${blockId}`);
-                if (response.data && response.data.transaccion && response.data.userInfo) {
+                if (response?.data && response?.data.transaccion && response.data.userInfo) {
                     this.transaccionData = {
                         usuario: response.data.userInfo.usuario,
                         blockId: response.data.transaccion.blockId,
@@ -453,7 +452,7 @@ export default {
             }
         },
         processRetrievedData(data) {
-            if (data && data.transaccion && data.userInfo) {
+            if (data && data?.transaccion && data?.userInfo) {
                 // Asegúrate de que todos los campos necesarios están presentes
                 this.transaccionData = {
                     usuario: data.userInfo.usuario,

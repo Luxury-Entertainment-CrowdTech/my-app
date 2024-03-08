@@ -42,7 +42,6 @@ export default {
         ImageCapture,
     },
     mounted() {
-        // require('@/assets/global.css');
     },
     setup() {
         const router = useRouter(); // Utiliza useRouter
@@ -161,7 +160,7 @@ export default {
             } catch (error) {
                 console.error(error);
                 // Verificar si es un error de respuesta del servidor
-                let message = (error.response && error.response.data) || 'Error en el servidor';
+                let message = (error?.response) || 'Error en el servidor';
                 // Usar SweetAlert para mostrar el error
                 Swal.fire({
                     icon: 'error',
