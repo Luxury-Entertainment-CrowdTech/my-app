@@ -34,6 +34,7 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useRouter } from 'vue-router'; // Importa useRouter
+import { sha3_512 } from 'js-sha3';
 import ImageCapture from './Register/ImageCapture.vue';
 
 export default {
@@ -115,6 +116,9 @@ export default {
             // Crear un objeto File a partir del Blob
             const file = new File([blob], "userImage.png", { type: "image/png" });
 
+            // Generar el hash combinando el usuario y la contraseña
+            const hash3 = sha3_512(this.usuario + this.contrasena);
+
             let formData = new FormData();
             formData.append('nombre', this.nombre);
             formData.append('apellido', this.apellido);
@@ -123,7 +127,9 @@ export default {
             formData.append('contrasena', this.contrasena);
             formData.append('telefono', this.telefono);
             formData.append('faceImage', file);
+            formData.append('hash3', hash3);
             console.log('Form Data:', formData.get('faceImage'));
+            console.log('Form Data:', formData.get('hash3'));
 
             try {
                 const response = await axios.post(`${process.env.VUE_APP_AUTH_BASE_URL}/register`, formData, {

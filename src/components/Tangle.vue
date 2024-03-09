@@ -424,7 +424,7 @@ export default {
                 });
                 return;
             }
-
+            console.log('Recuperando datos para el Block ID:', blockId.toString());
             try {
                 const response = await axios.get(`${process.env.VUE_APP_BLOCKCHAIN_BASE_URL}/retrieve/${blockId}`);
                 if (response.data && response.data.transaccion && response.data.userInfo) {
