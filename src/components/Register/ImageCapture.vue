@@ -36,7 +36,7 @@
 
         <!-- Contenedor para la imagen seleccionada o capturada -->
         <div v-if="image" class="image-preview-container">
-            <img :src="image" alt="Vista previa de la imagen" class="image-preview" />
+            <img :src="image" alt="Vista previa" class="image-preview" />
             <v-btn color="error" @click="clearImage">Eliminar Imagen</v-btn>
         </div>
     </v-container>
@@ -94,7 +94,7 @@ export default {
             this.showDialog = false;
         },
         async setupCamera() {
-            if (this.useCamera && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            if (this.useCamera && navigator?.mediaDevices && navigator?.mediaDevices.getUserMedia) {
                 try {
                     const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 320, height: 240 } });
                     const video = this.$refs.video;
@@ -116,7 +116,7 @@ export default {
             }
         },
         async stopCamera() {
-            if (this.$refs.video && this.$refs.video.srcObject) {
+            if (this.$refs?.video && this.$refs.video?.srcObject) {
                 this.$refs.video.srcObject.getTracks().forEach(track => track.stop());
                 this.$refs.video.srcObject = null;
             }
