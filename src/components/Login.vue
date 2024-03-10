@@ -10,7 +10,6 @@
                     type="password" required></v-text-field>
 
                 <!-- Token (Opcional) -->
-                <!-- <v-text-field variant="outlined" v-model="token" :rules="tokenRules" label="Token" required></v-text-field> -->
 
                 <!-- Esta implementacion se va a realizar posteriormente -->
                 <a href="#" class="text-body-2 font-weight-regular">¿Olvidaste tu contraseña?</a>

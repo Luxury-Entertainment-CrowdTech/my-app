@@ -55,7 +55,7 @@ export default {
 			],
 			emailRules: [
 				v => !!v || 'El campo es requerido',
-				v => /.+@.+\..+/.test(v) || 'Debe ser un email válido'
+				v => /.+?@.+?\..+/.test(v) || 'Debe ser un email válido'
 			],
 			phoneRules: [
 				v => !!v || 'El campo es requerido',
