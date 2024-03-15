@@ -5,7 +5,7 @@
         <v-file-input label="Cargar Archivo" ref="fileInput" clearable placeholder="Seleccione un archivo"
             @change="handleFileChange"
             ></v-file-input>
-        <v-btn color="primary" block class="mt-2" :disabled="!selectedFile" @click="upload">
+        <v-btn color="primary" block class="mt-2 color-green" :disabled="!selectedFile" @click="upload">
             Subir Archivo
         </v-btn>
     </div>
@@ -48,6 +48,10 @@ export default {
 .v-sheet {
     max-width: 100%;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.color-green {
+    background-color: rgb(86,147,44) !important;
 }
 
 /* Personalización del botón para que destaque más como un llamado a la acción */

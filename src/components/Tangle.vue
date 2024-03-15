@@ -13,19 +13,21 @@
             <v-container>
                 <v-row justify="center">
                     <v-col cols="12" md="10" class="text-center">
-                        <h1>Red Tangle Cliente/Servidor</h1>
-                        <p>
+                        <h1>Sistema de Ciberseguridad PAIP</h1>
+
+                        <h2>Entorno virtual Funcional</h2>
+                        <!-- <p>
                             Realizado por Renzo Di Paola Jara - Desarrollador Full Stack .Net, Python y NodeJS
                             <br>
                             <a href="recursos/renzo_actualizadoCV.pdf" target="_blank">Ver CV</a> | <a
                                 href="recursos/mdmn.pdf" target="_blank">Ver trabajo relacionado</a>
-                        </p>
+                        </p> -->
                     </v-col>
                 </v-row>
 
                 <v-row justify="center">
                     <v-col cols="12" md="10">
-                        <v-alert type="info">
+                        <v-alert type="info" class="color-green">
                             Ten en cuenta que mientras más grande sea el tamaño del archivo, más tiempo podría demorar su
                             procesamiento en la red Tangle.
                         </v-alert>
@@ -172,7 +174,7 @@
                                                     <v-list-item-title>{{ file.name }}</v-list-item-title>
                                                 </v-list-item-content>
                                                 <v-list-item-action>
-                                                    <v-btn icon :href="file.url" target="_blank">
+                                                    <v-btn icon @click.prevent="downloadFile(file.url, file.name)">
                                                         <v-icon>mdi-download</v-icon>
                                                     </v-btn>
                                                 </v-list-item-action>
@@ -186,7 +188,7 @@
                     </v-row>
 
                     <!-- Descripción del Proyecto y la Arquitectura -->
-                    <ProjectDescription :transmissionImage="transmissionImage" :logo_paip="logo_paip" />
+                    <!-- <ProjectDescription :transmissionImage="transmissionImage" :logo_paip="logo_paip" /> -->
 
                     <!-- Sección de Recursos Adicionales -->
                     <v-row justify="center" class="my-5">
@@ -208,10 +210,14 @@
         </v-main>
 
         <!-- Footer -->
-        <v-footer app padless>
-            <v-col class="text-center white--text" cols="12">
-                © {{ new Date().getFullYear() }} - Desarrollado por Renzo Di Paola Jara
-            </v-col>
+        <v-footer app padless class="footer-style">
+            <v-row justify="center" class="white--text text-center">
+                <v-col cols="12">
+                    <div>Jefe de Equipo: Renzo Di Paola Jara</div>
+                    <div>Programadores: Michael Kevin Soler Muñoz - Carlos Alfredo Lopez Lopez - Daniel Ureta Espinal - Rogger Garcia Diaz</div>
+                    <div>© {{ new Date().getFullYear() }} - Desarrollado por Tangle Team</div>
+                </v-col>
+            </v-row>
         </v-footer>
 
     </v-container>
@@ -220,7 +226,7 @@
 <script>
 import AlertSection from "@/components/Tangle/AlertSection.vue";
 import FileUploadForm from "@/components/Tangle/FileUploadForm.vue";
-import ProjectDescription from '@/components/Tangle/ProjectDescription.vue';
+// import ProjectDescription from '@/components/Tangle/ProjectDescription.vue';
 import SideMenu from '@/components/Tangle/SideMenu.vue';
 import TopNavBar from '@/components/Tangle/TopNavBar.vue';
 import axios from 'axios';
@@ -229,7 +235,7 @@ import Swal from 'sweetalert2';
 export default {
     name: 'TanglePage',
     components: {
-        ProjectDescription,
+        // ProjectDescription,
         TopNavBar,
         SideMenu,
         AlertSection,
@@ -510,10 +516,13 @@ export default {
                     // Verificar si dbData existe y tiene la propiedad ArchivoCifradoURL
                     if (file.dbData && typeof file.dbData.archivoCifradoURL === 'string') {
                         // Decodificar la URL
-                        const decodedUrl = decodeURIComponent(file.dbData.archivoCifradoURL);
-                        console.log('URL decodificada del archivo:', decodedUrl);
+                        let decodedUrl = decodeURIComponent(file.dbData.archivoCifradoURL);
+                        const urlParts = decodedUrl.split('/');
+                        let fileName = urlParts.pop() || urlParts.pop(); // Elimina el último elemento vacío en caso de terminar con '/'
 
-                        const fileName = decodedUrl.split('/').pop();
+                        // Si has añadido accidentalmente el parámetro a tus URLs, esto lo removerá para la visualización.
+                        fileName = fileName.split('?')[0];
+
                         const fileExtension = fileName.split('.').pop().toLowerCase();
                         const fileIcon = this.fileIconsMap[fileExtension] || 'fa-file';
                         console.log('Nombre del archivo:', fileName, 'Extensión:', fileExtension, 'Icono:', fileIcon);
@@ -549,6 +558,27 @@ export default {
                         text: 'Ocurrió un error al intentar recuperar los datos.',
                     });
                 }
+            }
+        },
+        async downloadFile(url, filename) {
+            // Asegurar que la URL use HTTPS
+            const secureUrl = url.replace(/^http:/, 'https:');
+
+            try {
+                const response = await fetch(secureUrl);
+                if (!response.ok) throw new Error(`Error: ${response.statusText}`);
+            
+                const blob = await response.blob();
+                const downloadUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            } catch (error) {
+                console.error('Error downloading file:', error);
+                alert('No se pudo descargar el archivo.');
             }
         },
         toggleDataContainer() {
@@ -613,6 +643,19 @@ export default {
 </script>
 
 <style scoped>
+.footer-style {
+    padding: 20px 10px; /* Ajusta el relleno según sea necesario */
+    font-size: 1rem; /* Ajusta el tamaño de la fuente según sea necesario */
+}
+
+.footer-style div {
+    font-weight: bold;
+}
+
+.color-green {
+    background-color: rgb(86,147,44) !important;
+}
+
 .v-btn--size-default {
     --v-btn-height: 56px;
 }

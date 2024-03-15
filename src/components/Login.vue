@@ -1,6 +1,9 @@
 <!-- src/components/Login.vue -->
 <template>
-    <div class="d-flex align-center justify-center" style="height: 100vh">
+    <div class="d-flex align-center justify-center flex-column" style="height: 100vh">
+        <!-- Imagen añadida en la parte superior -->
+        <img src="@/assets/img/LOGO_PAIP.png" class="login-image">
+
         <v-sheet width="400" class="mx-auto">
             <v-form ref="form" @submit.prevent="login" v-model="valid">
                 <!-- Campos de Texto para Usuario y Contraseña -->
@@ -227,6 +230,18 @@ export default {
 </script>
 
 <style scoped>
+.login-image {
+    padding: 50px;
+    height: 40%;
+    object-fit: cover; /* Asegura que la imagen cubra el espacio asignado sin perder sus proporciones */
+    display: block; /* Asegura que la imagen no tenga espacio blanco alrededor */
+    margin: 0 auto; /* Centra la imagen horizontalmente */
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
 .video-preview {
     width: 100%;
     height: 100%;
@@ -244,4 +259,3 @@ export default {
     /* El z-index debe ser mayor que el del modal Vuetify */
 }
 </style>
-```

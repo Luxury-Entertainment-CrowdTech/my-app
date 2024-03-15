@@ -1,7 +1,11 @@
 <!-- src/components/UserRegister.vue -->
 <template>
     <div class="d-flex align-center justify-center">
-        <v-sheet width="400" class="mx-auto">
+
+        <!-- Imagen añadida en la parte superior -->
+        <img src="@/assets/img/LOGO_PAIP.png" class="login-image">
+
+        <v-sheet width="400" class="">
             <div class="pt-12 text-center h-screen">
                 <v-form @submit.prevent="register" ref="form" enctype="multipart/form-data">
                     <!-- Campos de Texto para Registro -->
@@ -29,6 +33,27 @@
         </v-sheet>
     </div>
 </template>
+
+<style scoped>
+.login-image {
+    padding: 20px;
+    width: 15%;
+    object-fit: cover; /* Asegura que la imagen cubra el espacio asignado sin perder sus proporciones */
+    display: block; /* Asegura que la imagen no tenga espacio blanco alrededor */
+    margin: 0 auto; /* Centra la imagen horizontalmente */
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.d-flex {
+    display: flex !important;
+    flex-direction: column;
+}
+
+</style>
+
 
 <script>
 import axios from 'axios';

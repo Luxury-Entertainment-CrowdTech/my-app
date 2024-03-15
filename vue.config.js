@@ -10,6 +10,7 @@ module.exports = defineConfig({
     },
   },
   devServer: {
+    https: true, // Esto habilitará HTTPS con un certificado autofirmado
     allowedHosts: "all",
   },
 })
